@@ -154,6 +154,7 @@ func TestPod(t *testing.T) {
 							"node_name":      "node1",
 							"pod_name":       "pod1",
 							"state":          "running",
+							"ready":          "true",
 						},
 					},
 				},
