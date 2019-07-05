@@ -2,7 +2,6 @@ package kube_inventory
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/ericchiang/k8s/apis/core/v1"
 
@@ -55,6 +54,7 @@ func gatherPodContainer(nodeName string, p v1.Pod, cs v1.ContainerStatus, c v1.C
 		"restarts_total":    cs.GetRestartCount(),
 		"state_code":        stateCode,
 		"terminated_reason": cs.State.Terminated.GetReason(),
+		"ready":             cs.GetReady(),
 	}
 	tags := map[string]string{
 		"container_name": *c.Name,
@@ -62,7 +62,6 @@ func gatherPodContainer(nodeName string, p v1.Pod, cs v1.ContainerStatus, c v1.C
 		"node_name":      *p.Spec.NodeName,
 		"pod_name":       *p.Metadata.Name,
 		"state":          state,
-		"ready":          strconv.FormatBool(cs.GetReady()),
 	}
 
 	req := c.Resources.Requests
