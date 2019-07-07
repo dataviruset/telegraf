@@ -29,19 +29,22 @@ func (ki *KubernetesInventory) gatherNode(n v1.Node, acc telegraf.Accumulator) e
 	}
 
 	for _, val := range n.Status.Conditions {
+		if *val.Status == "Unknown" {
+			continue
+		}
 		switch *val.Type {
 		case "NetworkUnavailable":
-			fields["network_unavailable"] = atoi(*val.Status)
+			fields["network_unavailable"] = statusToInt(*val.Status)
 		case "OutOfDisk":
-			fields["out_of_disk"] = atoi(*val.Status)
+			fields["out_of_disk"] = statusToInt(*val.Status)
 		case "MemoryPressure":
-			fields["memory_pressure"] = atoi(*val.Status)
+			fields["memory_pressure"] = statusToInt(*val.Status)
 		case "DiskPressure":
-			fields["disk_pressure"] = atoi(*val.Status)
+			fields["disk_pressure"] = statusToInt(*val.Status)
 		case "PIDPressure":
-			fields["pid_pressure"] = atoi(*val.Status)
+			fields["pid_pressure"] = statusToInt(*val.Status)
 		case "Ready":
-			fields["ready"] = atoi(*val.Status)
+			fields["ready"] = statusToInt(*val.Status)
 		}
 	}
 

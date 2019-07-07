@@ -162,6 +162,10 @@ func boolToInt(b bool) int64 {
 	return 0
 }
 
+func statusToInt(s string) int64 {
+	return boolToInt(strings.ToLower(s) == "true")
+}
+
 var (
 	daemonSetMeasurement             = "kubernetes_daemonset"
 	deploymentMeasurement            = "kubernetes_deployment"
