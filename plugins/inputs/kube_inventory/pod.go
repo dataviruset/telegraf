@@ -54,7 +54,7 @@ func gatherPodContainer(nodeName string, p v1.Pod, cs v1.ContainerStatus, c v1.C
 		"restarts_total":    cs.GetRestartCount(),
 		"state_code":        stateCode,
 		"terminated_reason": cs.State.Terminated.GetReason(),
-		"ready":             cs.GetReady(),
+		"ready":             boolToInt(cs.GetReady()),
 	}
 	tags := map[string]string{
 		"container_name": *c.Name,

@@ -155,6 +155,13 @@ func convertQuantity(s string, m float64) int64 {
 	return int64(f * m)
 }
 
+func boolToInt(b bool) int64 {
+	if b {
+		return 1
+	}
+	return 0
+}
+
 var (
 	daemonSetMeasurement             = "kubernetes_daemonset"
 	deploymentMeasurement            = "kubernetes_deployment"
